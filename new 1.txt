@@ -1,0 +1,23 @@
+<nav>
+    <ul>
+        <li> <a href="../php/index.php">Index</a></li>
+		<li> <a href="../php/targyak.php">Tárgyak</a></li>
+		<li> <a href="../php/kurzusaim.php">Kurzusaim</a></li>
+		<li> <a href="../php/vizsgaim.php">Vizsgáim</a></li>
+        <li> <a href="../php/felhasznaloListaz.php">Felhasznalók kezelése</a></li>
+        <li> <a href="../php/adminListaz.php">Adminisztratorók kezelése</a></li>
+        <li> <a href="../php/hallgatoListaz.php">Hallgatók kezelése </a></li>
+        <li> <a href="../php/oktatoListaz.php">Oktatók kezelése</a></li>
+        <li> <a href="../php/szakListaz.php">Szak kezelése</a></li>
+        <li> <a href="../php/uzenetlistaz.php">Uzenetek kezelése</a></li>
+        <li> <a href="../php/targyListaz.php">Targy</a></li>
+        <li> <a href="../php/teremListaz.php">Terem</a></li>
+        <li> <a href="../php/kurzusListaz.php">Kurzus</a></li>
+        <li> <a href="../php/vizsgaListaz.php">Vizsga</a></li>
+        <li> <a href="../php/resztveszlistaz.php">Resztvesz</a></li>
+        <li> <a href="../php/tartListaz.php">Tart</a></li>
+        <li> <a href="../php/vizsgazikListaz.php">Vizsgazik</a></li>
+        <li> <a href="../php/vizsgaztatListaz.php">Vizsgaztat</a></li>
+		<li> <a href="../php/logout.php"> Kijelentkezés </a></li>
+    </ul>
+</nav>
