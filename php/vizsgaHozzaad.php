@@ -50,7 +50,10 @@ if ($max_vizsgakod == null) {
     <label name="azonosito" placeholder="<?php echo $azonosito; ?>">  <br>
 
     Tipus
-<input name="tipus">  <br>
+    <select name="tipus">
+        <option value="1" >Írásbeli</option>
+        <option value="2" >Szóbeli</option>
+    </select>
 
     Kezdet
     <input type="date" name="kezdet">  <br>
