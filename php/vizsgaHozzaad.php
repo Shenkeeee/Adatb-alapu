@@ -46,8 +46,8 @@ if ($max_vizsgakod == null) {
 
 <form action="../tools/vizsgaHozzaadTool.php" method="POST">
 
-    Azonosito
-    <label name="azonosito" placeholder="<?php echo $azonosito; ?>">  <br>
+    Azonosito <?php echo $azonosito ?>
+    <input type="hidden" name="azonosito" value="<?php echo $azonosito; ?>">  <br>
 
     Tipus
     <select name="tipus">
@@ -55,35 +55,29 @@ if ($max_vizsgakod == null) {
         <option value="2" >Szóbeli</option>
     </select>
 
-    Kezdet
-    <input type="date" name="kezdet">  <br>
-
-    Targykod
-    <select name="targy_kod">
-        <?php
-        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-            $targy_kod = $row['TARGY_KOD'];
-            echo "<option value=\"$targy_kod\">$targy_kod</option>";
-        }
-        ?>
-    </select><br>
+        Targykod
+        <select name="targy_kod">
+            <?php
+            while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                $targy_kod = $row['TARGY_KOD'];
+                echo "<option value=\"$targy_kod\">$targy_kod</option>";
+            }
+            ?>
+        </select><br>
 
 
-    Vég
-    <input type="date" name="veg">  <br>
+        Teremnev
+        <select name="teremnev">
+            <?php
+            while ($row = oci_fetch_array($stid2, OCI_ASSOC+OCI_RETURN_NULLS)) {
+                $teremnev = $row['TEREMNEV'];
+                echo "<option value=\"$teremnev\">$teremnev</option>";
+            }
+            ?>
+        </select><br>
 
-    Teremnev
-    <select name="teremnev">
-        <?php
-        while ($row = oci_fetch_array($stid2, OCI_ASSOC+OCI_RETURN_NULLS)) {
-            $teremnev = $row['TEREMNEV'];
-            echo "<option value=\"$teremnev\">$teremnev</option>";
-        }
-        ?>
-    </select><br>
-
-    Letszam
-<input type="number" name="letszam">  <br>
+        Letszam
+        <input type="number" name="letszam">  <br>
 
 
 
@@ -100,25 +94,9 @@ if ($max_vizsgakod == null) {
 
 
 
-    <button type="submit">Hozzaad</button> <br>
+        <button type="submit">Hozzaad</button> <br>
 </form>
 
-
-
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $kezdet_date = $_POST['kezdet_date'];
-    $kezdet_hour = $_POST['kezdet_hour'];
-    $kezdet_minute = $_POST['kezdet_minute'];
-    $kezdet = $kezdet_date . ' ' . str_pad($kezdet_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($kezdet_minute, 2, '0', STR_PAD_LEFT) . ':00,000000';
-
-    $veg_date = $_POST['veg_date'];
-    $veg_hour = $_POST['veg_hour'];
-    $veg_minute = $_POST['veg_minute'];
-    $veg = $veg_date . ' ' . str_pad($veg_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($veg_minute, 2, '0', STR_PAD_LEFT) . ':00,000000';
-
-}
-?>
 
 </body>
 </html>

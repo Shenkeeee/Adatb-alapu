@@ -2,17 +2,24 @@ DROP TABLE Resztvesz;
 DROP TABLE Tart;
 DROP TABLE Vizsgazik;
 DROP TABLE Vizsgaztat;
+DROP TABLE Vizsga;
+DROP TABLE Kurzus;
+DROP TABLE Targy;
+DROP TABLE Terem;
+DROP TABLE Uzenet;
 DROP TABLE Hallgato;
 DROP TABLE Oktato;
 DROP TABLE Adminisztrator;
-DROP TABLE Uzenet;
-DROP TABLE Kurzus;
-DROP TABLE Targy;
-DROP TABLE Vizsga;
-DROP TABLE Terem;
-DROP TABLE Szak;
 DROP TABLE Felhasznalo;
+DROP TABLE Szak;
 
+
+-- Szak tabla
+CREATE TABLE Szak (
+  szakid NUMBER(5) NOT NULL,
+  szaknev VARCHAR2(50) NOT NULL,
+  PRIMARY KEY (szakid)
+);
 
 -- Felhasznalo tabla
 CREATE TABLE Felhasznalo (
@@ -21,15 +28,17 @@ CREATE TABLE Felhasznalo (
   keresztnev VARCHAR2(100) NOT NULL,
   email VARCHAR2(100) NOT NULL,
   jelszo VARCHAR2(50) NOT NULL
- 
 );
 
 -- Hallgato tabla
 CREATE TABLE Hallgato (
-  eha_kod VARCHAR2(20) PRIMARY KEY NOT NULL,
+    eha_kod VARCHAR2(20) PRIMARY KEY NOT NULL,
   atlag NUMBER(3, 2),
+  szakid NUMBER(5) NOT NULL,
+  FOREIGN KEY (szakid) REFERENCES Szak (szakid) ON DELETE CASCADE,
   FOREIGN KEY (eha_kod) REFERENCES Felhasznalo (eha_kod) ON DELETE CASCADE
 );
+
 
 -- Oktato tabla
 CREATE TABLE Oktato (
@@ -43,13 +52,6 @@ CREATE TABLE Oktato (
 CREATE TABLE Adminisztrator (
   eha_kod VARCHAR2(20) PRIMARY KEY NOT NULL,
   FOREIGN KEY (eha_kod) REFERENCES Felhasznalo (eha_kod) ON DELETE CASCADE
-);
-
--- Szak tabla
-CREATE TABLE Szak (
-  szakid NUMBER(5) NOT NULL,
-  szaknev VARCHAR2(50) NOT NULL,
-  PRIMARY KEY (szakid)
 );
 
 -- uzenet tabla
@@ -89,6 +91,8 @@ CREATE TABLE Kurzus (
   veg DATE NOT NULL,
   teremnev VARCHAR2(30) NOT NULL,
   targy_kod VARCHAR2(20)  NOT NULL,
+  zart NUMBER(1) DEFAULT 0 NOT NULL, 
+  jelentkezok_szama NUMBER(5,0) NOT NULL,
   FOREIGN KEY (targy_kod) REFERENCES Targy (targy_kod) ON DELETE CASCADE,
   FOREIGN KEY (teremnev) REFERENCES Terem (teremnev) ON DELETE CASCADE
 );
@@ -101,6 +105,8 @@ CREATE TABLE Vizsga (
   veg TIMESTAMP NOT NULL,
   teremnev VARCHAR2(100) NOT NULL,
   letszam NUMBER(3) NOT NULL,
+  targy_kod VARCHAR2(20)  NOT NULL,
+  FOREIGN KEY (targy_kod) REFERENCES Targy (targy_kod) ON DELETE CASCADE,
   FOREIGN KEY (teremnev) REFERENCES Terem (teremnev) ON DELETE CASCADE
 );
 
@@ -140,8 +146,41 @@ CREATE TABLE Vizsgaztat (
   FOREIGN KEY (azonosito) REFERENCES Vizsga(azonosito) ON DELETE CASCADE
 );
 
+-- SZAK
 
--- felhasznalo 
+INSERT INTO Szak VALUES(1, 'Programtervezo Informatikus');
+INSERT INTO Szak VALUES(2, 'Jogasz');
+INSERT INTO Szak VALUES(3, 'Marketing');
+INSERT INTO Szak VALUES(4, 'Fogaszat');
+INSERT INTO Szak VALUES(5, 'Orvostudomany');
+INSERT INTO Szak VALUES(6, 'Muszaki Menedzser');
+INSERT INTO Szak VALUES(7, 'Gazdasaginformatikus');
+INSERT INTO Szak VALUES(8, 'Pszichologus');
+INSERT INTO Szak VALUES(9, 'Media es Kommunikacio');
+INSERT INTO Szak VALUES(10, 'Kozgazdasz');
+INSERT INTO Szak VALUES(11, 'Muveszettortenesz');
+INSERT INTO Szak VALUES(12, 'Biologus');
+INSERT INTO Szak VALUES(13, 'Informatikus');
+INSERT INTO Szak VALUES(14, 'Fizikus');
+INSERT INTO Szak VALUES(15, 'Tortenesz');
+INSERT INTO Szak VALUES(16, 'Szociologus');
+INSERT INTO Szak VALUES(17, 'allatorvos');
+INSERT INTO Szak VALUES(18, 'Grafikus');
+INSERT INTO Szak VALUES(19, 'Turizmus');
+INSERT INTO Szak VALUES(20, 'Villamosmernok');
+INSERT INTO Szak VALUES(21, 'Kozlekedesmernok');
+INSERT INTO Szak VALUES(22, 'Gepeszmernok');
+INSERT INTO Szak VALUES(23, 'epiteszmernok');
+INSERT INTO Szak VALUES(24, 'Muvesz');
+INSERT INTO Szak VALUES(25, 'Szoftvertervezo');
+INSERT INTO Szak VALUES(26, 'Matematikus');
+INSERT INTO Szak VALUES(27, 'Kemikus');
+INSERT INTO Szak VALUES(28, 'Kornyezetvedelmi Mernok');
+INSERT INTO Szak VALUES(29, 'Geologus');
+INSERT INTO Szak VALUES(30, 'Penzugy');
+
+
+-- felhasznalo
 
 INSERT INTO Felhasznalo VALUES ('AJZX6D', 'Rencenji', 'Denes', 'email037@gmail.com', '6273983abd274bc510f0f0c2939ed94e');
 INSERT INTO Felhasznalo VALUES ('B0A3OI', 'Rac', 'akos', 'email035@gmail.com', '7352aed43855bd10ce696fc03212dd5e');
@@ -202,58 +241,59 @@ INSERT INTO Felhasznalo VALUES ('ZZO229', 'Grujan', 'Bendeguz', 'email016@gmail.
 
 -- hallgato
 
-INSERT INTO Hallgato VALUES ('AJZX6D', 4.38);
-INSERT INTO Hallgato VALUES ('B0A3OI', 1.77);
-INSERT INTO Hallgato VALUES ('B6GQEW', 2.62);
-INSERT INTO Hallgato VALUES ('C1K4ZB', 3.24);
-INSERT INTO Hallgato VALUES ('C54MSQ', 1.56);
-INSERT INTO Hallgato VALUES ('CFEKVK', 2.14);
-INSERT INTO Hallgato VALUES ('CMRHX8', 1.92);
-INSERT INTO Hallgato VALUES ('CXGGSG', 2.13);
-INSERT INTO Hallgato VALUES ('CXPIH4', 1.48);
-INSERT INTO Hallgato VALUES ('DNVP2H', 3.41);
-INSERT INTO Hallgato VALUES ('EG00FK', 2.33);
-INSERT INTO Hallgato VALUES ('F79NO8', 4.36);
-INSERT INTO Hallgato VALUES ('FDE2ZK', 3.05);
-INSERT INTO Hallgato VALUES ('FM0LW6', 4.05);
-INSERT INTO Hallgato VALUES ('FT14WX', 4.51);
-INSERT INTO Hallgato VALUES ('FXLP42', 2.64);
-INSERT INTO Hallgato VALUES ('GZA4YX', 3.41);
-INSERT INTO Hallgato VALUES ('HCBCOV', 4.36);
-INSERT INTO Hallgato VALUES ('I0GGSY', 4.77);
-INSERT INTO Hallgato VALUES ('I2U52Y', 1.26);
-INSERT INTO Hallgato VALUES ('IBRP6D', 3.98);
-INSERT INTO Hallgato VALUES ('IEK09S', 1.43);
-INSERT INTO Hallgato VALUES ('IWZCI8', 1.85);
-INSERT INTO Hallgato VALUES ('KB24FJ', 2.54);
-INSERT INTO Hallgato VALUES ('MHE82U', 4.15);
-INSERT INTO Hallgato VALUES ('MI2WS5', 3.85);
-INSERT INTO Hallgato VALUES ('OMK2OY', 3.14);
-INSERT INTO Hallgato VALUES ('OO2BYO', 4.11);
-INSERT INTO Hallgato VALUES ('OTJB6G', 1.78);
-INSERT INTO Hallgato VALUES ('PBJ3HT', 4.21);
-INSERT INTO Hallgato VALUES ('PLMWRJ', 2.05);
-INSERT INTO Hallgato VALUES ('Q65IYT', 1.64);
-INSERT INTO Hallgato VALUES ('QRSPV6', 2.63);
-INSERT INTO Hallgato VALUES ('R86VM0', 3.89);
-INSERT INTO Hallgato VALUES ('RJCXM4', 2.14);
-INSERT INTO Hallgato VALUES ('S9QWNI', 1.58);
-INSERT INTO Hallgato VALUES ('SCZPWX', 2.67);
-INSERT INTO Hallgato VALUES ('SLWLGS', 4.46);
-INSERT INTO Hallgato VALUES ('TE3NUE', 1.84);
-INSERT INTO Hallgato VALUES ('TJ7I4M', 3.21);
-INSERT INTO Hallgato VALUES ('TO2DD6', 1.92);
-INSERT INTO Hallgato VALUES ('UZOLLA', 4.32);
-INSERT INTO Hallgato VALUES ('V4PUDX', 3.13);
-INSERT INTO Hallgato VALUES ('VUD6X0', 4.44);
-INSERT INTO Hallgato VALUES ('W1EY2O', 3.43);
-INSERT INTO Hallgato VALUES ('WKXEGB', 2.88);
-INSERT INTO Hallgato VALUES ('WVCK8I', 4.12);
-INSERT INTO Hallgato VALUES ('X88V3R', 4.87);
-INSERT INTO Hallgato VALUES ('XE7TAP', 4.32);
-INSERT INTO Hallgato VALUES ('XFJGDH', 3.89);
-INSERT INTO Hallgato VALUES ('Z3AQXJ', 4.71);
-INSERT INTO Hallgato VALUES ('ZZO229', 4.45);
+INSERT INTO Hallgato VALUES ('AJZX6D', 4.38, 1);
+INSERT INTO Hallgato VALUES ('B0A3OI', 1.77, 2);
+INSERT INTO Hallgato VALUES ('B6GQEW', 2.62, 3);
+INSERT INTO Hallgato VALUES ('C1K4ZB', 3.24, 4);
+INSERT INTO Hallgato VALUES ('C54MSQ', 1.56, 4);
+INSERT INTO Hallgato VALUES ('CFEKVK', 2.14, 5);
+INSERT INTO Hallgato VALUES ('CMRHX8', 1.92, 6);
+INSERT INTO Hallgato VALUES ('CXGGSG', 2.13, 6);
+INSERT INTO Hallgato VALUES ('CXPIH4', 1.48, 7);
+INSERT INTO Hallgato VALUES ('DNVP2H', 3.41, 9);
+INSERT INTO Hallgato VALUES ('EG00FK', 2.33, 8);
+INSERT INTO Hallgato VALUES ('F79NO8', 4.36, 10);
+INSERT INTO Hallgato VALUES ('FDE2ZK', 3.05, 11);
+INSERT INTO Hallgato VALUES ('FM0LW6', 4.05, 12);
+INSERT INTO Hallgato VALUES ('FT14WX', 4.51, 13);
+INSERT INTO Hallgato VALUES ('FXLP42', 2.64, 14);
+INSERT INTO Hallgato VALUES ('GZA4YX', 3.41, 15);
+INSERT INTO Hallgato VALUES ('HCBCOV', 4.36, 17);
+INSERT INTO Hallgato VALUES ('I0GGSY', 4.77, 15);
+INSERT INTO Hallgato VALUES ('I2U52Y', 1.26, 13);
+INSERT INTO Hallgato VALUES ('IBRP6D', 3.98, 16);
+INSERT INTO Hallgato VALUES ('IEK09S', 1.43, 18);
+INSERT INTO Hallgato VALUES ('IWZCI8', 1.85, 19);
+INSERT INTO Hallgato VALUES ('KB24FJ', 2.54, 20);
+INSERT INTO Hallgato VALUES ('MHE82U', 4.15, 22);
+INSERT INTO Hallgato VALUES ('MI2WS5', 3.85, 23);
+INSERT INTO Hallgato VALUES ('OMK2OY', 3.14, 29);
+INSERT INTO Hallgato VALUES ('OO2BYO', 4.11, 5);
+INSERT INTO Hallgato VALUES ('OTJB6G', 1.78, 8);
+INSERT INTO Hallgato VALUES ('PBJ3HT', 4.21, 9);
+INSERT INTO Hallgato VALUES ('PLMWRJ', 2.05, 12);
+INSERT INTO Hallgato VALUES ('Q65IYT', 1.64, 14);
+INSERT INTO Hallgato VALUES ('QRSPV6', 2.63, 17);
+INSERT INTO Hallgato VALUES ('R86VM0', 3.89, 15);
+INSERT INTO Hallgato VALUES ('RJCXM4', 2.14, 14);
+INSERT INTO Hallgato VALUES ('S9QWNI', 1.58, 15);
+INSERT INTO Hallgato VALUES ('SCZPWX', 2.67, 13);
+INSERT INTO Hallgato VALUES ('SLWLGS', 4.46, 12);
+INSERT INTO Hallgato VALUES ('TE3NUE', 1.84, 10);
+INSERT INTO Hallgato VALUES ('TJ7I4M', 3.21, 3);
+INSERT INTO Hallgato VALUES ('TO2DD6', 1.92, 7);
+INSERT INTO Hallgato VALUES ('UZOLLA', 4.32, 28);
+INSERT INTO Hallgato VALUES ('V4PUDX', 3.13, 4);
+INSERT INTO Hallgato VALUES ('VUD6X0', 4.44, 15);
+INSERT INTO Hallgato VALUES ('W1EY2O', 3.43, 22);
+INSERT INTO Hallgato VALUES ('WKXEGB', 2.88, 24);
+INSERT INTO Hallgato VALUES ('WVCK8I', 4.12, 27);
+INSERT INTO Hallgato VALUES ('X88V3R', 4.87, 30);
+INSERT INTO Hallgato VALUES ('XE7TAP', 4.32, 29);
+INSERT INTO Hallgato VALUES ('XFJGDH', 3.89, 28);
+INSERT INTO Hallgato VALUES ('Z3AQXJ', 4.71, 1);
+INSERT INTO Hallgato VALUES ('ZZO229', 4.45, 17);
+
 
 
 -- OKTATOK
@@ -269,40 +309,6 @@ INSERT INTO Oktato VALUES ('S9QWNI', 'demo');
 INSERT INTO Adminisztrator VALUES('AJZX6D');
 INSERT INTO Adminisztrator VALUES('CMRHX8');
 INSERT INTO Adminisztrator VALUES('EL9JKS');
-
--- SZAK
-
-INSERT INTO Szak VALUES(1, 'Programtervezo Informatikus');
-INSERT INTO Szak VALUES(2, 'Jogasz');
-INSERT INTO Szak VALUES(3, 'Marketing');
-INSERT INTO Szak VALUES(4, 'Fogaszat');
-INSERT INTO Szak VALUES(5, 'Orvostudomany');
-INSERT INTO Szak VALUES(6, 'Muszaki Menedzser');
-INSERT INTO Szak VALUES(7, 'Gazdasaginformatikus');
-INSERT INTO Szak VALUES(8, 'Pszichologus');
-INSERT INTO Szak VALUES(9, 'Media es Kommunikacio');
-INSERT INTO Szak VALUES(10, 'Kozgazdasz');
-INSERT INTO Szak VALUES(11, 'Muveszettortenesz');
-INSERT INTO Szak VALUES(12, 'Biologus');
-INSERT INTO Szak VALUES(13, 'Informatikus');
-INSERT INTO Szak VALUES(14, 'Fizikus');
-INSERT INTO Szak VALUES(15, 'Tortenesz');
-INSERT INTO Szak VALUES(16, 'Szociologus');
-INSERT INTO Szak VALUES(17, 'allatorvos');
-INSERT INTO Szak VALUES(18, 'Grafikus');
-INSERT INTO Szak VALUES(19, 'Turizmus');
-INSERT INTO Szak VALUES(20, 'Villamosmernok');
-INSERT INTO Szak VALUES(21, 'Kozlekedesmernok');
-INSERT INTO Szak VALUES(22, 'Gepeszmernok');
-INSERT INTO Szak VALUES(23, 'epiteszmernok');
-INSERT INTO Szak VALUES(24, 'Muvesz');
-INSERT INTO Szak VALUES(25, 'Szoftvertervezo');
-INSERT INTO Szak VALUES(26, 'Matematikus');
-INSERT INTO Szak VALUES(27, 'Kemikus');
-INSERT INTO Szak VALUES(28, 'Kornyezetvedelmi Mernok');
-INSERT INTO Szak VALUES(29, 'Geologus');
-INSERT INTO Szak VALUES(30, 'Penzugy');
-
 
 
 -- UZENET
@@ -398,40 +404,39 @@ INSERT INTO Terem (teremnev, gepes, fero_hely) VALUES ('Deli terem', 0, 70);
 
 --KURZUS
 
-INSERT INTO Kurzus VALUES ('K001', 'Matematikai Analizis 1', 6, 120, 'H-CS', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'Konyvtar', 'MT101E');
-INSERT INTO Kurzus VALUES ('K002', 'Programozasi Technikak 1', 5, 90, 'H-SZ', TO_DATE('12:00:00', 'HH24:MI:SS'), TO_DATE('14:00:00', 'HH24:MI:SS'), 'terem-004', 'PT102E');
-INSERT INTO Kurzus VALUES ('K003', 'Adatbazis-kezeles 1', 4, 60, 'K-CS', TO_DATE('14:00:00', 'HH24:MI:SS'), TO_DATE('16:00:00', 'HH24:MI:SS'), 'Deli terem', 'AD101E');
-INSERT INTO Kurzus VALUES ('K004', 'Mikro- es Makrookonomia 1', 5, 90, 'H-SZ', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'terem-001', 'MM101E');
-INSERT INTO Kurzus VALUES ('K005', 'Jogtudomany 1', 4, 60, 'K-P', TO_DATE('10:00:00', 'HH24:MI:SS'), TO_DATE('12:00:00', 'HH24:MI:SS'), 'terem-003', 'PJ101E');
-INSERT INTO Kurzus VALUES ('K006', 'Jogi szakszovegolvasas 1', 2, 30, 'H-SZ', TO_DATE('16:00:00', 'HH24:MI:SS'), TO_DATE('17:00:00', 'HH24:MI:SS'), 'terem-002', 'RJ101E');
-INSERT INTO Kurzus VALUES ('K007', 'Marketingkutatas 1', 4, 60, 'K-CS', TO_DATE('10:00:00', 'HH24:MI:SS'), TO_DATE('12:00:00', 'HH24:MI:SS'), 'terem-007', 'MK101E');
-INSERT INTO Kurzus VALUES ('K008', 'Jogtortenet 1', 2, 30, 'H-CS', TO_DATE('12:00:00', 'HH24:MI:SS'), TO_DATE('13:00:00', 'HH24:MI:SS'), 'terem-008', 'KJ101E');
-INSERT INTO Kurzus VALUES ('K009', 'Alkalmazott Anatomia 1', 5, 90, 'K-SZ', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'terem-006', 'AA101E');
-INSERT INTO Kurzus VALUES ('K010', 'Orvosi jogi ismeretek 1', 2, 30, 'H-SZ', TO_DATE('10:00:00', 'HH24:MI:SS'), TO_DATE('11:00:00', 'HH24:MI:SS'), 'Konyvtar', 'OJ101E');
-INSERT INTO Kurzus VALUES ('K011', 'Menedzsment alapjai 1', 4, 60, 'K-CS', TO_DATE('14:00:00', 'HH24:MI:SS'), TO_DATE('16:00:00', 'HH24:MI:SS'), 'terem-009', 'MM201E');
-INSERT INTO Kurzus VALUES ('K012', 'Marketingkommunikacio 1', 4, 60, 'H-CS', TO_DATE('16:00:00', 'HH24:MI:SS'), TO_DATE('18:00:00', 'HH24:MI:SS'), 'Konyvtar', 'MM202E');
-INSERT INTO Kurzus VALUES ('K013', 'Gazdasagi statisztika 1', 5, 90, 'K-SZ', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'Deli terem', 'GG101E');
+INSERT INTO Kurzus VALUES ('K001', 'Matematikai Analizis 1', 6, 120, 'H-CS', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'Konyvtar', 'MT101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K002', 'Programozasi Technikak 1', 5, 90, 'H-SZ', TO_DATE('12:00:00', 'HH24:MI:SS'), TO_DATE('14:00:00', 'HH24:MI:SS'), 'terem-004', 'PT102E', 0, 0);
+INSERT INTO Kurzus VALUES ('K003', 'Adatbazis-kezeles 1', 4, 60, 'K-CS', TO_DATE('14:00:00', 'HH24:MI:SS'), TO_DATE('16:00:00', 'HH24:MI:SS'), 'Deli terem', 'AD101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K004', 'Mikro- es Makrookonomia 1', 5, 90, 'H-SZ', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'terem-001', 'MM101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K005', 'Jogtudomany 1', 4, 60, 'K-P', TO_DATE('10:00:00', 'HH24:MI:SS'), TO_DATE('12:00:00', 'HH24:MI:SS'), 'terem-003', 'PJ101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K006', 'Jogi szakszovegolvasas 1', 2, 30, 'H-SZ', TO_DATE('16:00:00', 'HH24:MI:SS'), TO_DATE('17:00:00', 'HH24:MI:SS'), 'terem-002', 'RJ101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K007', 'Marketingkutatas 1', 4, 60, 'K-CS', TO_DATE('10:00:00', 'HH24:MI:SS'), TO_DATE('12:00:00', 'HH24:MI:SS'), 'terem-007', 'MK101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K008', 'Jogtortenet 1', 2, 30, 'H-CS', TO_DATE('12:00:00', 'HH24:MI:SS'), TO_DATE('13:00:00', 'HH24:MI:SS'), 'terem-008', 'KJ101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K009', 'Alkalmazott Anatomia 1', 5, 90, 'K-SZ', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'terem-006', 'AA101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K010', 'Orvosi jogi ismeretek 1', 2, 30, 'H-SZ', TO_DATE('10:00:00', 'HH24:MI:SS'), TO_DATE('11:00:00', 'HH24:MI:SS'), 'Konyvtar', 'OJ101E', 0, 0);
+INSERT INTO Kurzus VALUES ('K011', 'Menedzsment alapjai 1', 4, 60, 'K-CS', TO_DATE('14:00:00', 'HH24:MI:SS'), TO_DATE('16:00:00', 'HH24:MI:SS'), 'terem-009', 'MM201E', 0, 0);
+INSERT INTO Kurzus VALUES ('K012', 'Marketingkommunikacio 1', 4, 60, 'H-CS', TO_DATE('16:00:00', 'HH24:MI:SS'), TO_DATE('18:00:00', 'HH24:MI:SS'), 'Konyvtar', 'MM202E', 0, 0);
+INSERT INTO Kurzus VALUES ('K013', 'Gazdasagi statisztika 1', 5, 90, 'K-SZ', TO_DATE('08:00:00', 'HH24:MI:SS'), TO_DATE('10:00:00', 'HH24:MI:SS'), 'Deli terem', 'GG101E', 0, 0);
 
 -- VIZSGA
 
-INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam)
-VALUES ('VIZ001', 'szobeli', TO_DATE('2023-04-10 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-001', 30);
+INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam, targy_kod)
+VALUES ('VIZ001', 'szobeli', TO_DATE('2023-04-10 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-001', 30, 'MT101E');
 
-INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam)
-VALUES ('VIZ002', 'irasbeli', TO_DATE('2023-04-12 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-12 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-002', 40);
+INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam, targy_kod)
+VALUES ('VIZ002', 'irasbeli', TO_DATE('2023-04-12 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-12 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-002', 40, 'PT102E');
 
-INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam)
-VALUES ('VIZ003', 'szobeli', TO_DATE('2023-04-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-15 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-003', 50);
+INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam, targy_kod)
+VALUES ('VIZ003', 'szobeli', TO_DATE('2023-04-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-15 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-003', 50, 'IT101E');
 
-INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam)
-VALUES ('VIZ004', 'irasbeli', TO_DATE('2023-04-17 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-17 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-004', 25);
+INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam, targy_kod)
+VALUES ('VIZ004', 'irasbeli', TO_DATE('2023-04-17 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-17 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-004', 25, 'AD101E');
 
-INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam)
-VALUES ('VIZ005', 'szobeli', TO_DATE('2023-04-20 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-20 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-005', 40);
+INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam, targy_kod)
+VALUES ('VIZ005', 'szobeli', TO_DATE('2023-04-20 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-20 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-005', 40, 'MM101E');
 
-INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam)
-VALUES ('VIZ006', 'irasbeli', TO_DATE('2023-04-22 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-22 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-006', 60);
-
+INSERT INTO Vizsga (azonosito, tipus, kezdet, veg, teremnev, letszam, targy_kod)
+VALUES ('VIZ006', 'irasbeli', TO_DATE('2023-04-22 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-04-22 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'terem-006', 60, 'PJ101E');
 
 
 -- RESZTVESZ
@@ -526,3 +531,196 @@ INSERT INTO Vizsgaztat VALUES ('VIZ004', 'OB6T8E');
 INSERT INTO Vizsgaztat VALUES ('VIZ004', 'B0A3OI');
 INSERT INTO Vizsgaztat VALUES ('VIZ005', 'JOESES');
 INSERT INTO Vizsgaztat VALUES ('VIZ005', 'S9QWNI');
+
+
+-- TRIGGEREK
+
+
+-- 1. A 'Kurzus' táblához egy trigger, amely ellenőrzi, hogy a kurzus kezdeti és befejező dátuma helyes-e
+
+CREATE OR REPLACE TRIGGER trg_Kurzus_dates
+BEFORE INSERT OR UPDATE ON Kurzus
+FOR EACH ROW
+BEGIN
+  IF :NEW.kezdet >= :NEW.veg THEN
+    RAISE_APPLICATION_ERROR(-20001, 'A kurzus befejező dátuma nem lehet korábbi vagy egyenlő a kezdő dátumnál.');
+  END IF;
+END;
+/
+
+
+-- 2. A 'Vizsga' táblához egy trigger, amely automatikusan beállítja a letszámot a vizsgára regisztrált hallgatók száma alapján
+
+CREATE OR REPLACE TRIGGER trg_Vizsga_letszam
+BEFORE INSERT OR UPDATE ON Vizsga
+FOR EACH ROW
+DECLARE
+  v_letszam NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO v_letszam FROM Vizsgazik WHERE azonosito = :NEW.azonosito;
+  :NEW.letszam := v_letszam;
+END;
+/
+
+-- 3. A 'Kurzus' táblához egy trigger, amely ellenőrzi a résztvevők számát a terem kapacitásához képest
+
+CREATE OR REPLACE TRIGGER trg_Kurzus_letszam
+BEFORE INSERT OR UPDATE ON Kurzus
+FOR EACH ROW
+DECLARE
+  v_ferohely Terem.fero_hely%TYPE;
+  v_letszam NUMBER;
+BEGIN
+  SELECT fero_hely INTO v_ferohely FROM Terem WHERE teremnev = :NEW.teremnev;
+  SELECT COUNT(*) INTO v_letszam FROM Resztvesz WHERE kurzus_kod = :NEW.kod;
+  
+  IF v_letszam > v_ferohely THEN
+    RAISE_APPLICATION_ERROR(-20005, 'A kurzus résztvevőinek száma meghaladja a terem kapacitását.');
+  END IF;
+END;
+/
+
+-- 4. A 'Resztvesz' táblához egy trigger, amely automatikusan növeli a vizsga létszámát
+
+CREATE OR REPLACE TRIGGER trg_Resztvesz_noveles
+AFTER INSERT ON Resztvesz
+FOR EACH ROW
+BEGIN
+  UPDATE Vizsga
+  SET letszam = letszam + 1
+  WHERE azonosito = (SELECT targy_kod FROM Kurzus WHERE kod = :NEW.kurzus_kod);
+END;
+/
+
+-- 5. A 'Szak' táblához egy trigger, amely ellenőrzi a szakid egyediségét
+
+CREATE OR REPLACE TRIGGER trg_Szak_unique_szakid
+BEFORE INSERT OR UPDATE ON Szak
+FOR EACH ROW
+DECLARE
+  v_count NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO v_count FROM Szak WHERE szakid = :NEW.szakid;
+  
+  IF v_count > 0 THEN
+    RAISE_APPLICATION_ERROR(-20006, 'A megadott szakid már létezik. Kérlek, adj meg egy egyedi szakid-t.');
+  END IF;
+END;
+/
+
+
+-- 6. Frissíti a Kurzus táblában található jelentkezők számát a Resztvesz táblában történt új beszúrás vagy törlés után.
+
+CREATE OR REPLACE TRIGGER trg_frissit_jelentkezok_szama
+AFTER INSERT OR DELETE ON Resztvesz
+FOR EACH ROW
+BEGIN
+  UPDATE Kurzus
+  SET jelentkezok_szama = (SELECT COUNT(*) FROM Resztvesz WHERE kurzus_kod = :NEW.kurzus_kod)
+  WHERE kod = :NEW.kurzus_kod;
+END;
+/
+
+
+-- 7. A Trigger megakadályozza a zárt kurzusokra történő jelentkezést
+
+CREATE OR REPLACE TRIGGER trg_zart_kurzus
+BEFORE INSERT ON Resztvesz
+FOR EACH ROW
+DECLARE
+    v_zart NUMBER(1);
+BEGIN
+    SELECT zart INTO v_zart FROM Kurzus WHERE kod = :NEW.kurzus_kod;
+
+    IF v_zart = 1 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'A kurzus zárt, nem lehet jelentkezni.');
+    END IF;
+END;
+/
+
+
+
+
+-- ELJÁRÁSOK
+
+
+
+
+
+-- 1. Jelentkezteti a diákot a kurzusra
+
+CREATE OR REPLACE PROCEDURE diak_jelentkezes(
+  p_eha_kod IN VARCHAR2,
+  p_kod IN VARCHAR2
+)
+AS
+BEGIN
+  INSERT INTO Resztvesz (hallgato_eha_kod, kurzus_kod)
+  VALUES (p_eha_kod, p_kod);
+  
+  UPDATE Kurzus
+  SET jelentkezok_szama = jelentkezok_szama + 1
+  WHERE kod = p_kod;
+END;
+/
+
+
+-- 2. Tárgyon résztvevők száma
+
+CREATE OR REPLACE PROCEDURE targy_resztvevok_szama(
+  p_targy_kod VARCHAR2,
+  p_resztvevok_szama OUT NUMBER
+)
+IS
+BEGIN
+  SELECT COUNT(*) INTO p_resztvevok_szama
+  FROM Resztvesz r
+  JOIN Kurzus k ON r.kurzus_kod = k.kod
+  WHERE k.targy_kod = p_targy_kod;
+END;
+/
+
+-- 3. Diák kurzusról való lejelentkezése
+
+CREATE OR REPLACE PROCEDURE diak_lejelentkezes(
+  p_eha_kod IN VARCHAR2,
+  p_kod IN VARCHAR2
+)
+AS
+BEGIN
+  DELETE FROM Resztvesz
+  WHERE hallgato_eha_kod = p_eha_kod AND kurzus_kod = p_kod;
+  
+  UPDATE Kurzus
+  SET jelentkezok_szama = jelentkezok_szama - 1
+  WHERE kod = p_kod;
+  
+  COMMIT;
+END;
+/
+
+
+-- 4. Vizsgaszamot számít
+
+CREATE OR REPLACE PROCEDURE vizsgak_szama(
+  p_vizsgak_szama OUT NUMBER
+)
+AS
+BEGIN
+  SELECT COUNT(*) INTO p_vizsgak_szama FROM Vizsga;
+END;
+/
+
+
+-- 5. Tárgyhoz kurzusok száma
+
+CREATE OR REPLACE PROCEDURE kurzusok_szama(
+  p_targy_kod VARCHAR2,
+  p_kurzusok_szama OUT NUMBER
+)
+AS
+BEGIN
+  SELECT COUNT(*) INTO p_kurzusok_szama FROM Kurzus WHERE targy_kod = p_targy_kod;
+END;
+/
+

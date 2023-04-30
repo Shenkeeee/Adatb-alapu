@@ -3,7 +3,7 @@
 
                 require "../tools/connect.php";
 				
-				//$username=$_SESSION['username'];
+				$username=$_SESSION['username'];
 				
 				$sqlp = "SELECT * FROM adminisztrator  WHERE eha_kod='$username'";
 				

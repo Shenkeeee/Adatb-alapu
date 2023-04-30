@@ -49,7 +49,7 @@ if ($max_kurzuskod == null) {
 
 <form action="../tools/kurzusHozzaadTool.php" method="POST">
 
-    Azonosito <?php echo $kod; ?>
+    Kurzuskod <?php echo $kod; ?>
     <input name="kod" type="hidden" value="<?php echo $kod; ?>">  <br>
 
 
@@ -98,7 +98,8 @@ if ($max_kurzuskod == null) {
     <input type="date" name="veg">  <br>
 
 
-
+    Jelentkezők száma 0
+    <input type="hidden" name="jelentkezokszama" value="0">  <br>
 
 
     <button type="submit">Modosit</button> <br>

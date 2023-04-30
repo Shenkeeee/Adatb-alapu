@@ -35,7 +35,7 @@ $mivagyok = $stid;
 					
 				}
 
-?> <form action="./kurzusHozzaaad.php" method="POST"><?php
+?> <form action="./kurzusHozzaad.php" method="POST"><?php
     echo "    <td> <Button type='submit'> Hozzaad </Button></td>\n";
 ?> </form><?php
 

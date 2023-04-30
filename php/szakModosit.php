@@ -38,9 +38,9 @@ $szaknev = $_POST["szaknev"];
 
 <form action="../tools/szakModositTool.php" method="POST">
 
-    Szak ID <?php echo $szakid ?>
-    <input name="szakid" type="hidden" value="<?php echo $szakid ?>">
 
+    Szak ID <?php echo $szakid ?>
+    <input name="szakid" type="hidden" value="<?php echo $szakid ?>"><br>
 
     Szak Név
     <input name="szaknev" value="<?php echo $szaknev ?>">  <br>

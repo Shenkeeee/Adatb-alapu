@@ -58,7 +58,7 @@ oci_execute($stid1);
         while ($row = oci_fetch_array($stid1, OCI_ASSOC+OCI_RETURN_NULLS)) {
             $szak = $row['SZAKID'];
             $szaknev = $row['SZAKNEV'];
-            echo "<option value='$szaknev'>$szaknev</option>";
+            echo "<option value='$szak'>$szaknev</option>";
         }
         ?>
     </select>

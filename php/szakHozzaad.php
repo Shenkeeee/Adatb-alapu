@@ -43,9 +43,8 @@ $szakid = intval($max_id_result['MAX(SZAKID)']) + 1;
 
 <form action="../tools/szakHozzaaadTool.php" method="POST">
 
-    SzakID
-
-<label name="szakid" placeholder="<?php echo $szakid; ?>">  <br>
+    SzakID <?php echo $szakid; ?>
+<input name="szakid" type="hidden" value="<?php echo $szakid; ?>">  <br>
 
     Szaknev
 <input name="szaknev">  <br>

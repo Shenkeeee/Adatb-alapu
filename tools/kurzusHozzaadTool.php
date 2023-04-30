@@ -19,21 +19,20 @@ $kezdet = $_POST["kezdet"];
 $veg = $_POST["veg"];
 $teremnev = $_POST["teremnev"];
 $targy_kod = $_POST["targy_kod"];
+$jelentkezokszama = $_POST["jelentkezokszama"];
+//$zart = $_POST["zart"];
 
 
 $oktato_EHA_kod= $username;
 
 echo $kredit . " ot adom hozza elv " . ' <br>';
 
+$zart = 1;
 
+$query = oci_parse($conn, "INSERT INTO kurzus (kod, nev, kredit, oraszam, nap, kezdet, veg, teremnev, targy_kod, jelentkezok_szama, zart) 
+                            VALUES (:kod, :nev, :kredit, :oraszam, :nap, TO_DATE(:kezdet, 'YYYY-MM-DD'), TO_DATE(:veg, 'YYYY-MM-DD'), :teremnev, :targy_kod, :jelentkezok_szama, :zart)");
 
-// itt nem tudom hogy hogy lehet egyszerre többet - talan igy
-$query = oci_parse($conn, "INSERT INTO kurzus (kod, nev, kredit, oraszam, nap, kezdet, veg, teremnev, targy_kod) 
-                            VALUES (:kod, :nev, :kredit, :oraszam, :nap, TO_DATE(:kezdet, 'YYYY-MM-DD'), TO_DATE(:veg, 'YYYY-MM-DD'), :teremnev, :targy_kod)");
-
-$kurzus_kod = "ABC"; // replace with the actual kurzus_kod value
-$query_tart = oci_parse($conn, "INSERT INTO Tart (oktato_EHA_kod, kurzus_kod) 
-                                 VALUES (:oktato_EHA_kod, :kurzus_kod)");
+$kurzus_kod = $kod; // replace with the actual kurzus_kod value
 
 oci_bind_by_name($query, ":kod", $kod);
 oci_bind_by_name($query, ":nev", $nev);
@@ -44,26 +43,22 @@ oci_bind_by_name($query, ":kezdet", $kezdet);
 oci_bind_by_name($query, ":veg", $veg);
 oci_bind_by_name($query, ":teremnev", $teremnev);
 oci_bind_by_name($query, ":targy_kod", $targy_kod);
+oci_bind_by_name($query, ":jelentkezok_szama", $jelentkezokszama);
+oci_bind_by_name($query, ":zart", $zart);
 
 $result_kurzus = oci_execute($query, OCI_DEFAULT);
 
-if($result_kurzus) {
-    oci_bind_by_name($query_tart, ":oktato_EHA_kod", $oktato_EHA_kod);
-    oci_bind_by_name($query_tart, ":kurzus_kod", $kod);
+if ($result_kurzus) {
+    // Commit the transaction
+    oci_commit($conn);
+    echo "Data inserted into kurzus table successfully!";
+    header("location: ../php/kurzusListaz.php");
 
-    $result_tart = oci_execute($query_tart, OCI_DEFAULT);
-
-    if($result_tart) {
-        oci_commit($conn);
-        echo "Data Added succesfully.";
-        header("location: ../php/kurzusListaz.php");
-    } else {
-        oci_rollback($conn);
-        echo "Error adding data to Tart table.";
-    }
 } else {
+    // Rollback the transaction
     oci_rollback($conn);
-    echo "Error adding data to Kurzus table.";
+    $error_message = oci_error($query);
+    echo "Error inserting data into kurzus table: " . $error_message['message'];
 }
 
 

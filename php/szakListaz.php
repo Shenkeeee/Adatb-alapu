@@ -32,8 +32,9 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
-    ?> <form action="../tools/szakModositTool.php" method="POST"><?php
+    ?> <form action="./szakModosit.php" method="POST"><?php
     ?> <input type="hidden" name="szakid" value="<?php echo $row["SZAKID"] ?>"> <?php
+    ?> <input type="hidden" name="szaknev" value="<?php echo $row["SZAKNEV"] ?>"> <?php
     echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
     ?> </form><?php
 

@@ -14,8 +14,8 @@ session_start();
 $username=$_SESSION['username'];
 
 if (!isset($_SESSION["username"])) {
-     header("Location: bejelentkezes.php");
-	}
+    header("Location: bejelentkezes.php");
+}
 
 $stid = oci_parse($conn, 'SELECT targy.targy_kod,targy.nev,COUNT(kurzus.kod) "Kurzusok száma" FROM kurzus,targy WHERE kurzus.targy_kod=targy.targy_kod GROUP BY targy.nev,targy.targy_kod');
 oci_execute($stid);
@@ -37,22 +37,6 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
-
-    ?> <form action="../php/targyModosit.php" method="POST"><?php
-    ?> <input type="hidden" name="targykod" value="<?php echo $row["TARGY_KOD"] ?>"> <?php
-    ?> <input type="hidden" name="nev" value="<?php echo $row["NEV"] ?>"> <?php
-    ?> <input type="hidden" name="ajanlottfelev" value="<?php echo $row["AJANLOTT_FELEV"] ?>"> <?php
-    ?> <input type="hidden" name="oraszam" value="<?php echo $row["ORA_SZAM"] ?>"> <?php
-    ?> <input type="hidden" name="szakid" value="<?php echo $row["SZAKID"] ?>"> <?php
-
-    echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
-    ?> </form><?php
-
-    ?> <form action="../tools/targyTorolTool.php" method="POST"><?php
-    ?> <input type="hidden" name="targykod" value=<?php echo $row["TARGY_KOD"] ?>> <?php
-    echo "    <td> <Button type='submit'> Torol </Button></td>\n";
-    ?> </form><?php
-
 
 
     //2. elj
@@ -81,10 +65,27 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 
 
 
+    ?> <form action="../php/targyModosit.php" method="POST"><?php
+    ?> <input type="hidden" name="targykod" value="<?php echo $row["TARGY_KOD"] ?>"> <?php
+    ?> <input type="hidden" name="oraszam" value="<?php echo $row["ORA_SZAM"] ?>"> <?php
+
+    ?> <input type="hidden" name="nev" value="<?php echo $row["NEV"] ?>"> <?php
+
+    ?> <input type="hidden" name="szakid" value="<?php echo $row["SZAKID"] ?>"> <?php
+    ?> <input type="hidden" name="ajanlottfelev" value="<?php echo $row["AJANLOTT_FELEV"] ?>"> <?php
+
+    echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
+    ?> </form><?php
+
+    ?> <form action="../tools/targyTorolTool.php" method="POST"><?php
+    ?> <input type="hidden" name="targykod" value=<?php echo $row["TARGY_KOD"] ?>> <?php
+    echo "    <td> <Button type='submit'> Torol </Button></td>\n";
+    ?> </form><?php
 
 
-	echo  "<td> <a href='Kurzusok.php?tárgykód=".$row["TARGY_KOD"]."'> Megtekintés </a>  </td>";
-	//echo "<td>".$row["TARGY_KOD"]."</td>";
+
+    echo  "<td> <a href='Kurzusok.php?tárgykód=".$row["TARGY_KOD"]."'> Megtekintés </a>  </td>";
+    //echo "<td>".$row["TARGY_KOD"]."</td>";
     echo "</tr>\n";
 }
 echo "</table>\n";
