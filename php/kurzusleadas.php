@@ -20,8 +20,9 @@ require "../tools/connect.php";
         header("Location: bejelentkezes.php");
     }
 
+    require "../tools/connect.php";
 
-	//require_once "../tools/hallgatovizsgalat.php";
+	require_once "../tools/hallgatovizsgalat.php";
 
 
 

@@ -6,16 +6,8 @@
 <?php
 
 require_once "../tools/navbar.php";
+require "../tools/connect.php";
 
-$tns = "
-(DESCRIPTION =
-(ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = orania2.inf.u-szeged.hu)(PORT = 1521))
-)
-(CONNECT_DATA =
-(SID = orania2)
-)
-)";
 
 
 session_start();
@@ -24,14 +16,6 @@ $username=$_SESSION['username'];
 if (!isset($_SESSION["username"])) {
      header("Location: bejelentkezes.php");
 	}
-
-
-$conn=oci_connect("C##EL9JKS","C##EL9JKS",$tns, 'UTF8');
-
-if (!$conn) {
-    $e = oci_error();
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}
 
 $stid = oci_parse($conn, 'SELECT targy.targy_kod,targy.nev,COUNT(kurzus.kod) "Kurzusok száma" FROM kurzus,targy WHERE kurzus.targy_kod=targy.targy_kod GROUP BY targy.nev,targy.targy_kod');
 oci_execute($stid);

@@ -8,17 +8,7 @@
 <?php
 
 require_once "../tools/navbar.php";
-
-$tns = "
-(DESCRIPTION =
-(ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = orania2.inf.u-szeged.hu)(PORT = 1521))
-)
-(CONNECT_DATA =
-(SID = orania2)
-)
-)";
-
+require "../tools/connect.php";
 
 session_start();
 $username=$_SESSION['username'];
@@ -26,15 +16,6 @@ $username=$_SESSION['username'];
 if (!isset($_SESSION["username"])) {
      header("Location: bejelentkezes.php");
 }
-
-
-$conn=oci_connect("C##EL9JKS","C##EL9JKS",$tns, 'UTF8');
-
-if (!$conn) {
-    $e = oci_error();
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}
-
 
 if(isset($_GET['kurzuskód'])) {
 $kurzuskód = $_GET['kurzuskód'];

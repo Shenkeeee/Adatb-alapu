@@ -6,15 +6,9 @@
 	if (!isset($_SESSION["username"])) {
         header("Location: bejelentkezes.php");
     }
-	
-	$conn=oci_connect("C##EL9JKS","C##EL9JKS",$tns, 'UTF8');
+    require "../tools/connect.php";
 
-	if (!$conn) {
-		$e = oci_error();
-		trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-	}
-
-		if(isset($_GET['tárgykód'])) { 
+    if(isset($_GET['tárgykód'])) {
 		$tárgykód = $_GET['tárgykód'];
 		
 		

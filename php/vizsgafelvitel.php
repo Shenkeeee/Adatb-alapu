@@ -9,30 +9,16 @@
 
 echo "<h1> ETR </h1>";
 echo "<h2>A tárgy kurzusai</h2>";
-	
-	$tns = "
-(DESCRIPTION =
-(ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = orania2.inf.u-szeged.hu)(PORT = 1521))
-)
-(CONNECT_DATA =
-(SID = orania2)
-)
-)";
-	
-	session_start();
+require "../tools/connect.php";
+
+
+session_start();
 	$username=$_SESSION['username'];
 	
 	if (!isset($_SESSION["username"])) {
         header("Location: bejelentkezes.php");
     }
-	
-	$conn=oci_connect("C##EL9JKS","C##EL9JKS",$tns, 'UTF8');
 
-	if (!$conn) {
-		$e = oci_error();
-		trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-	}
 	
 	require_once "../tools/hallgatovizsgalat.php";
 	
