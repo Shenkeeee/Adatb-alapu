@@ -1,3 +1,5 @@
+
+
 <?php
 
 session_start();
@@ -59,20 +61,20 @@ oci_execute($stid2);
 
 $mivagyok = $stid;
 
-				
+
 				$sqlp = "SELECT * FROM oktato  WHERE eha_kod='$username'";
-				
+
 				$stmt = oci_parse($conn, $sqlp);
 				if ($stmt){
 					oci_execute($stmt, OCI_DEFAULT);
 					oci_fetch($stmt);
 					$kk = oci_result($stmt,"EHA_KOD");
-					if ($kk == $username) { 
+					if ($kk == $username) {
 						$mivagyok = $stid2;
-						
+
 					}
 					oci_free_statement($stmt);
-					
+
 				}
 
 
@@ -97,8 +99,14 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
-    ?> <form action="../tools/vizsgaModositTool.php" method="POST"><?php
+    ?> <form action="./vizsgaModosit.php" method="POST"><?php
     ?> <input type="hidden" name="azonosito" value="<?php echo $row["AZONOSITO"] ?>"> <?php
+    ?> <input type="hidden" name="tipus" value="<?php echo $row["TIPUS"] ?>"> <?php
+    ?> <input type="hidden" name="kezdet" value="<?php echo $row["KEZDET"]  ?>"> <?php
+    ?> <input type="hidden" name="veg" value="<?php echo $row["VEG"]  ?>"> <?php
+    ?> <input type="hidden" name="teremnev" value="<?php echo $row["TEREMNEV"]  ?>"> <?php
+    ?> <input type="hidden" name="letszam" value="<?php echo $row["LETSZAM"]  ?>"> <?php
+
     echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
     ?> </form><?php
 
@@ -120,7 +128,7 @@ echo "</table>\n";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link href="../css/listaz.css" rel="stylesheet">
-    
+
     <title>Vizsga Listaz</title>
 </head>
 <body>

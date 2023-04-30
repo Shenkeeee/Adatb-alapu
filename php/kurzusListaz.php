@@ -91,9 +91,22 @@ while ($row = oci_fetch_array($mivagyok, OCI_ASSOC+OCI_RETURN_NULLS)) {
 	
 	
 	
-    ?> <form action="../tools/kurzusModositTool.php" method="POST"><?php
+    ?> <form action="./kurzusModosit.php" method="POST"><?php
     ?> <input type="hidden" name="kod" value="<?php echo $row["KOD"] ?>"> <?php
-    echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
+    ?> <input type="hidden" name="nev" value="<?php echo $row["NEV"]  ?>"> <?php
+    ?> <input type="hidden" name="kredit" value="<?php echo $row["KREDIT"]  ?>"> <?php
+    ?> <input type="hidden" name="oraszam" value="<?php echo $row["ORASZAM"]  ?>"> <?php
+    ?> <input type="hidden" name="nap" value="<?php echo $row["NAP"]  ?>"> <?php
+    ?> <input type="hidden" name="kezdet" value="<?php echo $row["KEZDET"]  ?>"> <?php
+    ?> <input type="hidden" name="veg" value="<?php echo $row["VEG"]  ?>"> <?php
+    ?> <input type="hidden" name="teremnev" value="<?php echo $row["TEREMNEV"]  ?>"> <?php
+    ?> <input type="hidden" name="targy_kod" value="<?php echo $row["TARGY_KOD"]  ?>"> <?php
+    ?> <input type="hidden" name="zart" value="<?php echo $row["ZART"]  ?>"> <?php
+
+
+
+
+        echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
     ?> </form><?php
 
     ?> <form action="../tools/kurzusTorolTool.php" method="POST"><?php

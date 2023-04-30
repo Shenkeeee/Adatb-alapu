@@ -72,10 +72,7 @@ oci_execute($stid);
 <input name="teremnev">  <br>
 
     Gépes
-    <select name="gepes">
-        <option value="1">Igen</option>
-        <option value="0">Nem</option>
-    </select>
+    <input type="checkbox" name="gepes" value="1">
 
     Ferohely
 <input name="ferohely" type="number">  <br>

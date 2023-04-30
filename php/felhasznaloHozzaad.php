@@ -86,10 +86,10 @@ oci_execute($stid);
 <input name="keresztnev">  <br>
 
     Email
-<input name="email">  <br>
+<input type="email" name="email">  <br>
 
     Jelszo
-<input name="pass">  <br>
+<input type="password" name="pass">  <br>
 
     <button type="submit">Hozzaad</button> <br>
 </form>

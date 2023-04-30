@@ -1,4 +1,7 @@
 <html>
+<head>
+    <link href="../css/listaz.css" rel="stylesheet">
+</head>
 
 <h1> Tárgyak </h1>
 
@@ -19,7 +22,7 @@ $tns = "
 
 session_start();
 $username=$_SESSION['username'];
-	
+
 if (!isset($_SESSION["username"])) {
      header("Location: bejelentkezes.php");
 }
@@ -33,7 +36,7 @@ if (!$conn) {
 }
 
 
-if(isset($_GET['kurzuskód'])) { 
+if(isset($_GET['kurzuskód'])) {
 $kurzuskód = $_GET['kurzuskód'];
 
 echo $kurzuskód;

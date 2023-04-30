@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Chat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/listaz.css">
 <!--    <link rel="stylesheet" href="../css/forAll.css">-->
 <!--    <link rel="stylesheet" href="../css/chat.css">-->
 

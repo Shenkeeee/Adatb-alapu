@@ -64,6 +64,7 @@ if (!$conn) {
 ?>
 
 <html>
+
 <body>
 	<h1> ETR </H1>
 	<h2> Bejelentkezés </h2>

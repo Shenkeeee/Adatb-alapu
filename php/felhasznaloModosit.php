@@ -94,11 +94,11 @@ $email = $_POST["email"];
 <input name="keresztnev" placeholder="<?php echo $keresztnev ?>">  <br>
 
     Email
-<input name="email" placeholder="<?php echo $email ?>">  <br>
+<input type="email" name="email" placeholder="<?php echo $email ?>">  <br>
 
     Jelszo
 <!--<input name="pass" placeholder="--><?php //echo $jelszo ?><!--">  <br>-->
-<input name="pass" >  <br>
+<input type="password" name="pass" >  <br>
 
     <button type="submit">Modosit</button> <br>
 </form>

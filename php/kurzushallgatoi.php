@@ -1,4 +1,7 @@
 <html>
+<head>
+    <link href="../css/listaz.css" rel="stylesheet">
+</head>
 
 <h1> Tárgyak </h1>
 

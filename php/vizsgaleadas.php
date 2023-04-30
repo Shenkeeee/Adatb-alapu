@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link href="../css/listaz.css" rel="stylesheet">
+</head>
 <body>
 
 <?php

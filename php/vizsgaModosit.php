@@ -59,16 +59,14 @@ $stid = oci_parse($conn, 'SELECT kod FROM kurzus');
 oci_execute($stid);
 */
 
-$kod = $_POST["kod"];
-$nev = $_POST["nev"];
-$kredit = $_POST["kredit"];
-$oraszam = $_POST["oraszam"];
-$nap = $_POST["nap"];
+$azonosito = $_POST["azonosito"];
+$tipus = $_POST["tipus"];
 $kezdet = $_POST["kezdet"];
 $veg = $_POST["veg"];
 $teremnev = $_POST["teremnev"];
-$targykod = $_POST["targy_kod"];
-$zart = $_POST["zart"];
+$letszam = $_POST["letszam"];
+$targy_kod = $_POST["targy_kod"];
+
 
 
 ?>
@@ -88,19 +86,36 @@ $zart = $_POST["zart"];
 
 <form action="../tools/kurzusModositTool.php" method="POST">
 
-    Kod
-    <input disabled value="<?php echo $kod ?>">   <br>
-    <input name="kod" type="hidden" value="<?php echo $kod ?>">
+    $azonosito = $_POST["azonosito"];
+    $tipus = $_POST["tipus"];
+    $kezdet = $_POST["kezdet"];
+    $veg = $_POST["veg"];
+    $teremnev = $_POST["teremnev"];
+    $letszam = $_POST["letszam"];
+    $targy_kod = $_POST["targy_kod"];
 
-    Targykod
-    <select name="targy_kod">
-        <?php
-        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-            $targy_kod = $row['TARGY_KOD'];
-            echo "<option value=\"$targy_kod\">$targy_kod</option>";
-        }
-        ?>
-    </select><br>
+
+
+
+    Azonosito
+    <label name="azonosito" placeholder="<?php echo $azonosito; ?>">  <br>
+
+
+    Tipus
+    <select name="tipus">
+        <option value="1" >Írásbeli</option>
+        <option value="2" >Szóbeli</option>
+    </select>
+
+
+
+    Kezdet
+    <input type="date" name="kezdet">  <br>
+
+
+    Vég
+    <input type="date" name="veg">  <br>
+
 
     Teremnév
     <select name="teremnev">
@@ -113,25 +128,19 @@ $zart = $_POST["zart"];
     </select><br>
 
 
-    Név
-    <input name="nev" value="<?php echo $nev ?>">  <br>
-
-    Kredit
-    <input type="number" name="kredit" value="<?php echo $kredit ?>">  <br>
-
-    Oraszam
-    <input type="number" name="oraszam" value="<?php echo $oraszam ?>">  <br>
-
-    Nap
-    <input name="nap"  value="<?php echo $nap ?>">  <br>
-
-    Kezdet
-    <input type="date" name="kezdet">  <br>
+    Létszám
+    <input type="number" name="letszam" value="<?php echo $letszam ?>">  <br>
 
 
-    Vég
-    <input type="date" name="veg">  <br>
-
+    Targykod
+    <select name="targy_kod">
+        <?php
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            $targy_kod = $row['TARGY_KOD'];
+            echo "<option value=\"$targy_kod\">$targy_kod</option>";
+        }
+        ?>
+    </select><br>
 
 
 
@@ -141,3 +150,4 @@ $zart = $_POST["zart"];
 
 </body>
 </html>
+

@@ -50,6 +50,17 @@ oci_execute($stid2);
 $stid = oci_parse($conn, 'SELECT eha_kod FROM felhasznalo');
 oci_execute($stid);
 
+
+// Generate new szakid
+$max_id_query = oci_parse($conn, 'SELECT MAX(szakid) FROM szak');
+oci_execute($max_id_query);
+$max_id_result = oci_fetch_assoc($max_id_query);
+$szakid = intval($max_id_result['MAX(SZAKID)']) + 1;
+
+
+
+
+
 ?>
 
 <html lang="en">
@@ -68,7 +79,8 @@ oci_execute($stid);
 <form action="../tools/szakHozzaaadTool.php" method="POST">
 
     SzakID
-<input name="szakid">  <br>
+
+<label name="szakid" placeholder="<?php echo $szakid; ?>">  <br>
 
     Szaknev
 <input name="szaknev">  <br>

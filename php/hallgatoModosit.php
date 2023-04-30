@@ -78,7 +78,7 @@ $szak = $_POST["szak"];
     <input name="ehakod" type="hidden" value="<?php echo $ehakod ?>">
 
     Atlag
-    <input name="atlag" placeholder="<?php echo $atlag ?>">  <br>
+    <input type="number" name="atlag" placeholder="<?php echo $atlag ?>">  <br>
 
     SzakID (1-30)
     <input name="szak" placeholder="<?php echo $szak ?>"> <br>

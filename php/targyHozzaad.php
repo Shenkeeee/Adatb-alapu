@@ -74,10 +74,10 @@ oci_execute($stid);
 <input name="nev">  <br>
 
     Ajanlott felev
-<input name="ajanlottfelev">  <br>
+<input type="number" name="ajanlottfelev">  <br>
 
     Oraszam
-<input name="oraszam">  <br>
+<input type="number" name="oraszam">  <br>
 
     SzakID
 <input name="szakid">  <br>

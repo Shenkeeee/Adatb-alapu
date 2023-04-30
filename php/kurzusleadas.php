@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link href="../css/listaz.css" rel="stylesheet">
+</head>
+
 <body>
 
 <?php
@@ -124,12 +128,12 @@ echo "<h2>A tárgy kurzusai</h2>";
 	session_start();
 	$username=$_SESSION['username'];
 	$conn = new mysqli("localhost","root","","etr");
-	
-	
+
+
 	if (!isset($_SESSION["username"])) {
         header("Location: bejelentkezés.php");
     }
-	
+
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	}
@@ -186,16 +190,16 @@ echo "<h2>A tárgy kurzusai</h2>";
 
 		if(isset($_GET['kurzuskód'])) {
 		$kurzuskód = $_GET['kurzuskód'];
-		
+
 		$sql_kurzus = "SELECT kurzuskód,név,kredit,maxfő,nap,kezdet,vég,óraszám,teremnév FROM kurzusok WHERE kurzuskód='$kurzuskód'";
 		$result_kurzus = $conn->query($sql_kurzus);
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		if ($result_kurzus->num_rows == 1) {
 		echo " <form action='kurzusleadas.php' method='POST'>
 		<table>";
@@ -212,23 +216,23 @@ echo "<h2>A tárgy kurzusai</h2>";
 		}
 		echo "</table>
 		</form>";
-		
+
 	} else {
 		echo "Nincsenek tárgyak rögzítve!";
 	}
-	
-	
+
+
 	}
-	else { 
+	else {
 		echo "Hiba!";
 	}
-	
+
 ?>
 <script>
-	function figyelmezetetoablak_torles() { 
+	function figyelmezetetoablak_torles() {
 		return confirm('Biztosan leszeretné adni ezt a kurzust?')
 	}
-	
+
 </script>
 </body>
 </html>

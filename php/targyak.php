@@ -1,4 +1,7 @@
 <html>
+<head>
+    <link href="../css/listaz.css" rel="stylesheet">
+</head>
 
 <?php
 
@@ -17,7 +20,7 @@ $tns = "
 
 session_start();
 $username=$_SESSION['username'];
-	
+
 if (!isset($_SESSION["username"])) {
      header("Location: bejelentkezes.php");
 	}
@@ -50,7 +53,7 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
     }
 
 
-    
+
     //2. elj
     $targy_kod = $row["TARGY_KOD"];
     $kurzusok_szama = 0;

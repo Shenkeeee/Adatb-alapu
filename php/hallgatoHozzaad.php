@@ -40,13 +40,19 @@ if (!$conn) {
 
 $rowsadmin = "";
 
-// adminhoz - hogy olyat ne lehessen kivalasztani aki mar admin
-$stid2 = oci_parse($conn, 'SELECT eha_kod FROM hallgato');
-oci_execute($stid2);
 
 // felhasznalokhoz, akik még nem hallgatók
 $stid = oci_parse($conn, 'SELECT eha_kod FROM felhasznalo WHERE eha_kod NOT IN (SELECT eha_kod FROM hallgato)');
 oci_execute($stid);
+
+$query = "SELECT * FROM szak";
+$stid1 = oci_parse($conn, $query);
+oci_execute($stid1);
+
+// adminhoz - hogy olyat ne lehessen kivalasztani aki mar admin
+$stid2 = oci_parse($conn, 'SELECT eha_kod FROM hallgato');
+oci_execute($stid2);
+
 
 ?>
 
@@ -84,8 +90,16 @@ oci_execute($stid);
     Atlag
     <input name="atlag">  <br>
 
-    SzakID (1-30)
-    <input name="szak">  <br>
+    Szak
+    <select name="szak">
+        <?php
+        while ($row = oci_fetch_array($stid1, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            $szak = $row['SZAKID'];
+            $szaknev = $row['SZAKNEV'];
+            echo "<option value='$szaknev'>$szaknev</option>";
+        }
+        ?>
+    </select>
 
     <button type="submit">Hozzaad</button> <br>
 </form>
