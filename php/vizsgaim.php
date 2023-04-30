@@ -11,15 +11,7 @@ if (!isset($_SESSION["username"])) {
       header("Location: bejelentkezes.php");
 }
 
-$tns = "
-(DESCRIPTION =
-(ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = orania2.inf.u-szeged.hu)(PORT = 1521))
-)
-(CONNECT_DATA =
-(SID = orania2)
-)
-)";
+require "../tools/connect.php";
 
 require_once "../tools/navbar.php";
 
@@ -29,12 +21,7 @@ echo "<h1> ETR </h1>
 echo "<a href='../php/vizsgaListaz.php'> Saját vizsga </a>";
 
 
-$conn=oci_connect("C##EL9JKS","C##EL9JKS",$tns, 'UTF8');
-
-if (!$conn) {
-    $e = oci_error();
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}
+require "../tools/connect.php";
 
 
 $stid = oci_parse($conn, "SELECT vizsga.azonosito,vizsga.tipus,vizsga.kezdet,vizsga.veg,vizsga.teremnev,vizsga.letszam FROM vizsga WHERE azonosito IN (SELECT azonosito FROM vizsgazik WHERE eha_kod='$username')");

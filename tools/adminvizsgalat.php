@@ -1,7 +1,7 @@
 <?php
-				
-				
-				
+
+
+                require "../tools/connect.php";
 				
 				//$username=$_SESSION['username'];
 				
