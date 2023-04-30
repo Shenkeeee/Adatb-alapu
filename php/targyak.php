@@ -28,6 +28,8 @@ echo "<td> Tárgy név </td>";
 echo "<td> Kurzusok száma </td>";
 echo "<td> Kurzusok </td>";
 echo "<td> Résztvevők száma </td>";
+echo "<td> Módisít </td>";
+echo "<td> Töröl </td>";
 echo "</tr>";
 
 while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
@@ -35,6 +37,21 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
+
+    ?> <form action="../php/targyModosit.php" method="POST"><?php
+    ?> <input type="hidden" name="targykod" value="<?php echo $row["TARGY_KOD"] ?>"> <?php
+    ?> <input type="hidden" name="nev" value="<?php echo $row["NEV"] ?>"> <?php
+    ?> <input type="hidden" name="ajanlottfelev" value="<?php echo $row["AJANLOTT_FELEV"] ?>"> <?php
+    ?> <input type="hidden" name="oraszam" value="<?php echo $row["ORA_SZAM"] ?>"> <?php
+    ?> <input type="hidden" name="szakid" value="<?php echo $row["SZAKID"] ?>"> <?php
+
+    echo "    <td> <Button type='submit'> Modosit </Button></td>\n";
+    ?> </form><?php
+
+    ?> <form action="../tools/targyTorolTool.php" method="POST"><?php
+    ?> <input type="hidden" name="targykod" value=<?php echo $row["TARGY_KOD"] ?>> <?php
+    echo "    <td> <Button type='submit'> Torol </Button></td>\n";
+    ?> </form><?php
 
 
 

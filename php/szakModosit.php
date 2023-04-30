@@ -38,8 +38,7 @@ $szaknev = $_POST["szaknev"];
 
 <form action="../tools/szakModositTool.php" method="POST">
 
-    Eha-kod
-    <input disabled value="<?php echo $szakid ?>">   <br>
+    Szak ID <?php echo $szakid ?>
     <input name="szakid" type="hidden" value="<?php echo $szakid ?>">
 
 
