@@ -18,6 +18,20 @@ $stid2 = oci_parse($conn, $query2);
 oci_execute($stid2);
 
 
+// Generate new kurzuskod
+$max_kurzuskod_query = oci_parse($conn, 'SELECT MAX(kod) FROM kurzus');
+oci_execute($max_kurzuskod_query);
+$max_kurzuskod_result = oci_fetch_assoc($max_kurzuskod_query);
+$max_kurzuskod = $max_kurzuskod_result['MAX(KOD)'];
+if ($max_kurzuskod == null) {
+    $kurzuskod = 'K001';
+} else {
+    $new_kurzuskod_num = intval(substr($max_kurzuskod, 1)) + 1;
+    $kod = 'K' . str_pad($new_kurzuskod_num, 3, '0', STR_PAD_LEFT);
+}
+
+
+
 
 ?>
 
@@ -34,6 +48,9 @@ oci_execute($stid2);
 <h1>Kurzus hozzáadása </h1>
 
 <form action="../tools/kurzusHozzaadTool.php" method="POST">
+
+    Azonosito <?php echo $kod; ?>
+    <input name="kod" type="hidden" value="<?php echo $kod; ?>">  <br>
 
 
     Targykod
@@ -62,8 +79,6 @@ oci_execute($stid2);
     Név
     <input name="nev">  <br>
 
-    Kod
-    <input name="kod">  <br>
 
 
     Kredit
