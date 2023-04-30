@@ -11,16 +11,8 @@
 <body>
 
 <?php
+require "../tools/connect.php";
 
-$tns = "
-(DESCRIPTION =
-(ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = orania2.inf.u-szeged.hu)(PORT = 1521))
-)
-(CONNECT_DATA =
-(SID = orania2)
-)
-)";
 
 require_once "../tools/navbar.php";
 
@@ -30,21 +22,12 @@ echo "<h1> ETR </h1>
 echo "<a href='../php/kurzusListaz.php'> Saját kurzusok </a>";
 
 
-$conn=oci_connect("C##EL9JKS","C##EL9JKS",$tns, 'UTF8');
-
-
 session_start();
 $username=$_SESSION['username'];
 
 if (!isset($_SESSION["username"])) {
       header("Location: bejelentkezes.php");
 }
-
-if (!$conn) {
-    $e = oci_error();
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}
-
 
 $stid = oci_parse($conn, "SELECT kurzus.kod,kurzus.nev FROM kurzus WHERE kurzus.kod IN (SELECT kurzus_kod FROM resztvesz WHERE resztvesz.hallgato_eha_kod='$username') ORDER BY kurzus.nev");
 oci_execute($stid);
