@@ -23,6 +23,11 @@ $ehakod = $_POST["ehakod"];
 $atlag = $_POST["atlag"];
 $szak = $_POST["szak"];
 
+$query = "SELECT * FROM szak";
+$stid1 = oci_parse($conn, $query);
+oci_execute($stid1);
+
+
 ?>
 
 <html lang="en">
@@ -47,8 +52,16 @@ $szak = $_POST["szak"];
     Atlag
     <input type="number" name="atlag" placeholder="<?php echo $atlag ?>">  <br>
 
-    SzakID (1-30)
-    <input name="szak" placeholder="<?php echo $szak ?>"> <br>
+    SzakID
+    <select name="szak">
+        <?php
+        while ($row = oci_fetch_array($stid1, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            $szak = $row['SZAKID'];
+            $szaknev = $row['SZAKNEV'];
+            echo "<option value='$szaknev'>$szaknev</option>";
+        }
+        ?>
+    </select>
 
     <button type="submit" >Modosit</button> <br>
 </form>
