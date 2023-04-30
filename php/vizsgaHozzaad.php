@@ -82,8 +82,40 @@ if ($max_vizsgakod == null) {
     Letszam
 <input type="number" name="letszam">  <br>
 
+
+
+        <label for="kezdet_date">Kezdő dátum:</label>
+        <input type="date" id="kezdet_date" name="kezdet_date">
+        <input type="number" id="kezdet_hour" name="kezdet_hour" min="0" max="23" placeholder="Óra" required>
+        <input type="number" id="kezdet_minute" name="kezdet_minute" min="0" max="59" placeholder="Perc" required>
+        <br>
+        <label for="veg_date">Vég dátum:</label>
+        <input type="date" id="veg_date" name="veg_date">
+        <input type="number" id="veg_hour" name="veg_hour" min="0" max="23" placeholder="Óra" required>
+        <input type="number" id="veg_minute" name="veg_minute" min="0" max="59" placeholder="Perc" required>
+        <br>
+
+
+
     <button type="submit">Hozzaad</button> <br>
 </form>
+
+
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $kezdet_date = $_POST['kezdet_date'];
+    $kezdet_hour = $_POST['kezdet_hour'];
+    $kezdet_minute = $_POST['kezdet_minute'];
+    $kezdet = $kezdet_date . ' ' . str_pad($kezdet_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($kezdet_minute, 2, '0', STR_PAD_LEFT) . ':00,000000';
+
+    $veg_date = $_POST['veg_date'];
+    $veg_hour = $_POST['veg_hour'];
+    $veg_minute = $_POST['veg_minute'];
+    $veg = $veg_date . ' ' . str_pad($veg_hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($veg_minute, 2, '0', STR_PAD_LEFT) . ':00,000000';
+
+}
+?>
 
 </body>
 </html>
